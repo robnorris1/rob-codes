@@ -16,7 +16,7 @@ const About: FC = () => {
                                 Who I Am
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
-                                {"I'm a passionate developer with expertise in modern web technologies. I love creating elegant solutions to complex problems."}
+                                I am a passionate developer with expertise in modern web technologies. I love creating elegant solutions to complex problems.
                             </Typography>
                         </Paper>
                     </Grid>
@@ -26,7 +26,7 @@ const About: FC = () => {
                                 What I Do
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
-                                {"I specialize in building responsive web applications using React, Next.js, and TypeScript. I focus on creating intuitive user experiences."}
+                                I specialize in building responsive web applications using React, Next.js, and TypeScript. I focus on creating intuitive user experiences.
                             </Typography>
                         </Paper>
                     </Grid>
