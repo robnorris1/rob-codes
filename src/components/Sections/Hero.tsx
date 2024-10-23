@@ -17,67 +17,114 @@ const Hero: FC = () => {
             sx={{
                 bgcolor: 'background.default',
                 pt: 12,
-                pb: 6,
+                pb: 8,
+                minHeight: '90vh',
+                display: 'flex',
+                alignItems: 'center',
             }}
         >
-            <Container maxWidth="lg">
-                <Typography
-                    variant="h1"
-                    align="center"
-                    gutterBottom
-                    sx={{
-                        fontFamily: 'monospace',
-                        letterSpacing: '0.05em',
-                        mb: 4,
-                        '& .brace': {
-                            color: 'primary.main',
-                            fontWeight: 'bold',
-                        },
-                        '& .underscore': {
-                            color: 'primary.main',
-                        },
-                    }}
-                >
-                    <span className="brace">{'{'}</span>
-                    {' rob'}
-                    <span className="underscore">_</span>
-                    {'codes '}
-                    <span className="brace">{'}'}</span>
-                </Typography>
-                <Typography
-                    variant="h5"
-                    align="center"
-                    color="text.secondary"
-                    paragraph
-                    sx={{ mb: 4 }}
-                >
-                    A Full Stack Software Engineer passionate about creating elegant solutions
-                </Typography>
-                <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center', gap: 2 }}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => scrollToSection('skills')}
+            <Container maxWidth="md">
+                <Box sx={{ textAlign: 'center' }}>
+                    {/* Logo/Name */}
+                    <Typography
+                        variant="h1"
+                        gutterBottom
                         sx={{
-                            px: 4,
-                            py: 1.5,
-                            fontSize: '1.1rem',
+                            fontFamily: 'monospace',
+                            letterSpacing: '0.05em',
+                            fontSize: { xs: '2.5rem', md: '3.5rem' },
+                            mb: 4,
+                            '& .brace': {
+                                color: 'primary.main',
+                                fontWeight: 'bold',
+                            },
+                            '& .underscore': {
+                                color: 'primary.main',
+                            },
                         }}
                     >
-                        View Skills
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        color="primary"
-                        onClick={() => scrollToSection('contact')}
+                        <span className="brace">{'{'}</span>
+                        {' rob'}
+                        <span className="underscore">_</span>
+                        {'codes '}
+                        <span className="brace">{'}'}</span>
+                    </Typography>
+
+                    {/* Title */}
+                    <Typography
+                        variant="h2"
                         sx={{
-                            px: 4,
-                            py: 1.5,
-                            fontSize: '1.1rem',
+                            fontSize: { xs: '1.75rem', md: '2.25rem' },
+                            fontWeight: 500,
+                            mb: 3,
+                            color: 'text.primary',
                         }}
                     >
-                        Contact Me
-                    </Button>
+                        Full Stack Software Engineer
+                    </Typography>
+
+                    {/* Description */}
+                    <Typography
+                        variant="body1"
+                        sx={{
+                            fontSize: { xs: '1rem', md: '1.1rem' },
+                            color: 'text.secondary',
+                            maxWidth: '600px',
+                            mx: 'auto',
+                            lineHeight: 1.8,
+                            mb: 6,
+                        }}
+                    >
+                        AWS Certified professional with expertise in React, TypeScript, and Next.js.
+                        Passionate about delivering user-centric solutions and mentoring fellow developers.
+                    </Typography>
+
+                    {/* CTA Buttons */}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            gap: 3,
+                            justifyContent: 'center',
+                            flexWrap: 'wrap'
+                        }}
+                    >
+                        <Button
+                            variant="contained"
+                            size="large"
+                            onClick={() => scrollToSection('skills')}
+                            sx={{
+                                px: 4,
+                                py: 1.5,
+                                fontSize: '1.1rem',
+                                minWidth: '160px',
+                                textTransform: 'none',
+                                boxShadow: 'none',
+                                '&:hover': {
+                                    boxShadow: 'none',
+                                }
+                            }}
+                        >
+                            View Skills
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            size="large"
+                            onClick={() => scrollToSection('contact')}
+                            sx={{
+                                px: 4,
+                                py: 1.5,
+                                fontSize: '1.1rem',
+                                minWidth: '160px',
+                                textTransform: 'none',
+                                borderWidth: 2,
+                                '&:hover': {
+                                    borderWidth: 2,
+                                }
+                            }}
+                        >
+                            Contact Me
+                        </Button>
+                    </Box>
                 </Box>
             </Container>
         </Box>
