@@ -1,9 +1,10 @@
+// src/components/Sections/About.tsx
 import { Box, Container, Typography, Grid, Paper } from '@mui/material';
 import { FC } from 'react';
 
 const About: FC = () => {
     return (
-        <Box sx={{ bgcolor: 'background.default', py: 8 }}>
+        <Box sx={{ bgcolor: 'background.default', py: 8 }} id="about">
             <Container maxWidth="lg">
                 <Typography variant="h2" align="center" gutterBottom>
                     About Me
@@ -15,8 +16,7 @@ const About: FC = () => {
                                 Who I Am
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
-                                I'm a passionate developer with expertise in modern web technologies.
-                                I love creating elegant solutions to complex problems.
+                                {"I'm a passionate developer with expertise in modern web technologies. I love creating elegant solutions to complex problems."}
                             </Typography>
                         </Paper>
                     </Grid>
@@ -26,9 +26,7 @@ const About: FC = () => {
                                 What I Do
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
-                                I specialize in building responsive web applications using React,
-                                Next.js, and TypeScript. I focus on creating intuitive user
-                                experiences.
+                                {"I specialize in building responsive web applications using React, Next.js, and TypeScript. I focus on creating intuitive user experiences."}
                             </Typography>
                         </Paper>
                     </Grid>
