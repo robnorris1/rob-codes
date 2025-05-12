@@ -3,6 +3,7 @@
 
 import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
 import { FC } from 'react';
+import { Download as DownloadIcon } from '@mui/icons-material';
 
 const Header: FC = () => {
     const menuItems = ['About', 'Skills', 'Contact'];
@@ -39,7 +40,8 @@ const Header: FC = () => {
                     {'codes '}
                     <span className="brace">{'}'}</span>
                 </Typography>
-                <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+
+                <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', mr: 1 }}>
                     {menuItems.map((item) => (
                         <Button
                             key={item}
@@ -56,6 +58,33 @@ const Header: FC = () => {
                         </Button>
                     ))}
                 </Box>
+
+                <Button
+                    component="a"
+                    href="/assets/rob_norris_resume.pdf"
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        borderRadius: '8px',
+                        backgroundColor: 'primary.main', // Your brown/beige tone
+                        color: 'white',
+                        fontSize: '0.9rem',
+                        fontWeight: 500,
+                        px: 2,
+                        py: 0.75,
+                        minWidth: 'auto',
+                        transition: 'all 0.2s ease',
+                        '&:hover': {
+                            backgroundColor: '#C49366', // Slightly darker shade
+                        }
+                    }}
+                >
+                    <DownloadIcon sx={{ mr: 0.5, fontSize: '1rem' }} />
+                    CV
+                </Button>
             </Toolbar>
         </AppBar>
     );
