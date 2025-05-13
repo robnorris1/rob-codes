@@ -1,54 +1,70 @@
-// src/app/api/contact/route.ts
 import { NextResponse } from 'next/server';
+import { Resend } from 'resend';
+
+interface ContactRequest {
+    name: string;
+    email: string;
+    subject?: string;
+    message: string;
+}
 
 export async function POST(req: Request) {
     try {
-        // Log environment variables (remove in production!)
-        console.log('Checking env vars:', {
-            hasApiKey: !!process.env.SENDGRID_API_KEY,
-            fromEmail: process.env.FROM_EMAIL,
-            toEmail: process.env.TO_EMAIL,
-        });
-
-        const body = await req.json();
+        const body = await req.json() as ContactRequest;
         const { name, email, subject, message } = body;
 
-        // Log the request body (remove in production!)
-        console.log('Request body:', { name, email, subject });
+        if (!name || !email || !message) {
+            return NextResponse.json(
+                { message: 'Missing required fields' },
+                { status: 400 }
+            );
+        }
 
-        const sendGridResponse = await fetch('https://api.sendgrid.com/v3/mail/send', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${process.env.SENDGRID_API_KEY}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                personalizations: [{
-                    to: [{ email: process.env.TO_EMAIL }],
-                }],
-                from: {
-                    email: process.env.FROM_EMAIL,
-                    name: 'Portfolio Contact Form',
-                },
-                subject: `Portfolio Contact: ${subject || 'New Message'}`,
-                content: [{
-                    type: 'text/html',
-                    value: `
-            <h3>New Contact Form Submission</h3>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Subject:</strong> ${subject}</p>
-            <p><strong>Message:</strong></p>
-            <p>${message}</p>
-          `,
-                }],
-            }),
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return NextResponse.json(
+                { message: 'Invalid email format' },
+                { status: 400 }
+            );
+        }
+
+        if (!process.env.RESEND_API_KEY || !process.env.FROM_EMAIL || !process.env.TO_EMAIL) {
+            console.error('Missing environment variables:', {
+                hasResendApiKey: !!process.env.RESEND_API_KEY,
+                hasFromEmail: !!process.env.FROM_EMAIL,
+                hasToEmail: !!process.env.TO_EMAIL,
+            });
+
+            return NextResponse.json(
+                { message: 'Server configuration error' },
+                { status: 500 }
+            );
+        }
+
+        const resend = new Resend(process.env.RESEND_API_KEY);
+
+        const result = await resend.emails.send({
+            from: `Portfolio Contact <${process.env.FROM_EMAIL}>`,
+            to: [process.env.TO_EMAIL],
+            subject: `Portfolio Contact: ${subject || 'New Message'}`,
+            html: `
+                <h3>New Contact Form Submission</h3>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Subject:</strong> ${subject || 'N/A'}</p>
+                <p><strong>Message:</strong></p>
+                <p>${message.replace(/\n/g, '<br/>')}</p>
+            `,
+            replyTo: email
         });
 
-        if (!sendGridResponse.ok) {
-            const errorData = await sendGridResponse.text();
-            console.error('SendGrid error:', errorData);
-            throw new Error(`SendGrid API error: ${errorData}`);
+        if (result.error) {
+            console.error('Resend API error:', result.error);
+
+            return NextResponse.json(
+                { message: 'Failed to send email. Please try again later.' },
+                { status: 500 }
+            );
         }
 
         return NextResponse.json(
@@ -56,9 +72,10 @@ export async function POST(req: Request) {
             { status: 200 }
         );
     } catch (error) {
-        console.error('Detailed error:', error);
+        console.error('Unexpected error:', error);
+
         return NextResponse.json(
-            { message: `Failed to send email: ${error instanceof Error ? error.message : 'Unknown error'}` },
+            { message: 'An unexpected error occurred. Please try again later.' },
             { status: 500 }
         );
     }

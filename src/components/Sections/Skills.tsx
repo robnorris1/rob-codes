@@ -1,4 +1,3 @@
-// src/components/Sections/Skills.tsx
 'use client';
 
 import React from 'react';
@@ -8,7 +7,7 @@ import {
     Storage as StorageIcon,
     Cloud as CloudIcon,
     Architecture as ArchitectureIcon,
-    Verified as VerifiedIcon  // Fixed import name
+    Verified as VerifiedIcon
 } from '@mui/icons-material';
 
 interface Certification {
@@ -16,6 +15,18 @@ interface Certification {
     link: string;
 }
 
+interface Skill {
+    name: string;
+    level: number;
+}
+
+interface SkillCategory {
+    title: string;
+    icon: React.ReactNode;
+    skills: Skill[];
+}
+
+// Data definitions - separating data from UI
 const certifications: Certification[] = [
     {
         name: 'AWS Certified Cloud Practitioner',
@@ -26,15 +37,6 @@ const certifications: Certification[] = [
         link: 'https://www.credly.com/users/rob-norris.4ed21e49'
     }
 ];
-
-interface SkillCategory {
-    title: string;
-    icon: React.ReactNode;
-    skills: Array<{
-        name: string;
-        level: number;
-    }>;
-}
 
 const skillCategories: SkillCategory[] = [
     {
@@ -75,9 +77,69 @@ const skillCategories: SkillCategory[] = [
     }
 ];
 
+const CertificationBadge: React.FC<{ certification: Certification }> = ({ certification }) => (
+    <Link
+        href={certification.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        underline="none"
+    >
+        <Paper
+            sx={{
+                px: 3,
+                py: 2,
+                bgcolor: 'primary.main',
+                color: 'white',
+                borderRadius: '20px',
+                fontSize: '0.9rem',
+                fontWeight: 500,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                transition: 'transform 0.2s ease-in-out',
+                '&:hover': {
+                    transform: 'translateY(-2px)'
+                }
+            }}
+        >
+            <VerifiedIcon sx={{ fontSize: '1.1rem' }} />
+            {certification.name}
+        </Paper>
+    </Link>
+);
+
+const SkillProgress: React.FC<{ skill: Skill }> = ({ skill }) => (
+    <Box>
+        <Box sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            mb: 0.5
+        }}>
+            <Typography variant="body2" color="text.secondary">
+                {skill.name}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+                {skill.level}%
+            </Typography>
+        </Box>
+        <LinearProgress
+            variant="determinate"
+            value={skill.level}
+            sx={{
+                height: 6,
+                borderRadius: 3,
+                bgcolor: 'grey.100',
+                '& .MuiLinearProgress-bar': {
+                    borderRadius: 3,
+                }
+            }}
+        />
+    </Box>
+);
+
 const Skills: React.FC = () => {
     return (
-        <Box sx={{ py: 8, bgcolor: 'background.default' }}>
+        <Box component="section" id="skills" sx={{ py: 8, bgcolor: 'background.default' }}>
             <Container maxWidth="lg">
                 <Typography
                     component="h2"
@@ -90,7 +152,6 @@ const Skills: React.FC = () => {
                     Skills & Expertise
                 </Typography>
 
-                {/* Certifications */}
                 <Box sx={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -105,6 +166,7 @@ const Skills: React.FC = () => {
                     >
                         AWS Certified
                     </Typography>
+
                     <Box sx={{
                         display: 'flex',
                         justifyContent: 'center',
@@ -112,40 +174,11 @@ const Skills: React.FC = () => {
                         flexWrap: 'wrap'
                     }}>
                         {certifications.map((cert) => (
-                            <Link
-                                key={cert.name}
-                                href={cert.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                underline="none"
-                            >
-                                <Paper
-                                    sx={{
-                                        px: 3,
-                                        py: 2,
-                                        bgcolor: 'primary.main',
-                                        color: 'white',
-                                        borderRadius: '20px',
-                                        fontSize: '0.9rem',
-                                        fontWeight: 500,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 1,
-                                        transition: 'transform 0.2s ease-in-out',
-                                        '&:hover': {
-                                            transform: 'translateY(-2px)'
-                                        }
-                                    }}
-                                >
-                                    <VerifiedIcon sx={{ fontSize: '1.1rem' }} />
-                                    {cert.name}
-                                </Paper>
-                            </Link>
+                            <CertificationBadge key={cert.name} certification={cert} />
                         ))}
                     </Box>
                 </Box>
 
-                {/* Skills Grid */}
                 <Grid container spacing={4}>
                     {skillCategories.map((category) => (
                         <Grid item xs={12} md={6} key={category.title}>
@@ -174,32 +207,7 @@ const Skills: React.FC = () => {
 
                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
                                     {category.skills.map((skill) => (
-                                        <Box key={skill.name}>
-                                            <Box sx={{
-                                                display: 'flex',
-                                                justifyContent: 'space-between',
-                                                mb: 0.5
-                                            }}>
-                                                <Typography variant="body2" color="text.secondary">
-                                                    {skill.name}
-                                                </Typography>
-                                                <Typography variant="body2" color="text.secondary">
-                                                    {skill.level}%
-                                                </Typography>
-                                            </Box>
-                                            <LinearProgress
-                                                variant="determinate"
-                                                value={skill.level}
-                                                sx={{
-                                                    height: 6,
-                                                    borderRadius: 3,
-                                                    bgcolor: 'grey.100',
-                                                    '& .MuiLinearProgress-bar': {
-                                                        borderRadius: 3,
-                                                    }
-                                                }}
-                                            />
-                                        </Box>
+                                        <SkillProgress key={skill.name} skill={skill} />
                                     ))}
                                 </Box>
                             </Paper>
