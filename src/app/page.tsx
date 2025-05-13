@@ -4,6 +4,10 @@ import Hero from '../components/Sections/Hero';
 import About from '../components/Sections/About';
 import Skills from '../components/Sections/Skills';
 import Contact from '../components/Sections/Contact';
+import { metadata } from './metadata'; // Import the metadata
+
+// Re-export the metadata
+export { metadata };
 
 export default function Page() {
     return (
