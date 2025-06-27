@@ -1,13 +1,9 @@
-// src/app/page.tsx
 import { Box } from '@mui/material';
 import Hero from '../components/Sections/Hero';
 import About from '../components/Sections/About';
+import Stories from '../components/Sections/Stories';
 import Skills from '../components/Sections/Skills';
-import Contact from '../components/Sections/Contact';
-import { metadata } from './metadata'; // Import the metadata
-
-// Re-export the metadata
-export { metadata };
+import Contact from "@/components/Sections/Contact";
 
 export default function Page() {
     return (
@@ -15,6 +11,9 @@ export default function Page() {
             <Hero />
             <Box id="about">
                 <About />
+            </Box>
+            <Box id="stories">
+                <Stories />
             </Box>
             <Box id="skills">
                 <Skills />

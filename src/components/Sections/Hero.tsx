@@ -1,10 +1,9 @@
-// src/components/Sections/Hero.tsx
 'use client';
 
+import React from 'react';
 import { Box, Container, Typography, Button } from '@mui/material';
-import { FC } from 'react';
 
-const Hero: FC = () => {
+const Hero: React.FC = () => {
     const scrollToSection = (sectionId: string) => {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -16,95 +15,134 @@ const Hero: FC = () => {
         <Box
             sx={{
                 bgcolor: 'background.default',
-                pt: 12,
-                pb: 8,
-                minHeight: '90vh',
+                pt: { xs: 8, md: 12 },
+                pb: { xs: 8, md: 12 },
+                minHeight: 'calc(100vh - 80px)',
                 display: 'flex',
                 alignItems: 'center',
+                position: 'relative',
             }}
         >
             <Container maxWidth="md">
                 <Box sx={{ textAlign: 'center' }}>
-                    {/* Logo/Name */}
                     <Typography
                         variant="h1"
-                        gutterBottom
                         sx={{
-                            fontFamily: 'monospace',
-                            letterSpacing: '0.05em',
-                            fontSize: { xs: '2.5rem', md: '3.5rem' },
-                            mb: 4,
-                            '& .brace': {
-                                color: 'primary.main',
-                                fontWeight: 'bold',
-                            },
-                            '& .underscore': {
-                                color: 'primary.main',
+                            fontFamily: '"SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace',
+                            fontSize: { xs: '2.25rem', sm: '2.75rem', md: '3.25rem' },
+                            fontWeight: 600,
+                            mb: { xs: 3, md: 4 },
+                            color: 'text.primary',
+                            letterSpacing: '-0.02em',
+                            '& .accent': {
+                                color: 'secondary.main',
                             },
                         }}
                     >
-                        <span className="brace">{'{'}</span>
+                        <span className="accent">{'{'}</span>
                         {' rob'}
-                        <span className="underscore">_</span>
+                        <span className="accent">_</span>
                         {'codes '}
-                        <span className="brace">{'}'}</span>
+                        <span className="accent">{'}'}</span>
                     </Typography>
 
-                    {/* Title */}
                     <Typography
                         variant="h2"
                         sx={{
-                            fontSize: { xs: '1.75rem', md: '2.25rem' },
-                            fontWeight: 500,
-                            mb: 3,
+                            fontSize: { xs: '1.5rem', sm: '1.875rem', md: '2.25rem' },
+                            fontWeight: 600,
+                            mb: { xs: 3, md: 4 },
                             color: 'text.primary',
+                            lineHeight: 1.2,
                         }}
                     >
                         Full Stack Software Engineer
                     </Typography>
 
-                    {/* Description */}
                     <Typography
                         variant="body1"
                         sx={{
-                            fontSize: { xs: '1rem', md: '1.1rem' },
+                            fontSize: { xs: '1rem', md: '1.125rem' },
                             color: 'text.secondary',
-                            maxWidth: '600px',
+                            maxWidth: '580px',
                             mx: 'auto',
-                            lineHeight: 1.8,
-                            mb: 6,
+                            lineHeight: 1.6,
+                            mb: { xs: 6, md: 8 },
                         }}
                     >
-                        AWS Certified professional with expertise in React, TypeScript, and Next.js.
-                        Passionate about delivering user-centric solutions and mentoring fellow developers.
+                        7+ years building robust backend systems and full-stack applications.
+                        Experienced with Node.js, RESTful APIs, and modernizing enterprise
+                        systems serving thousands of users.
                     </Typography>
 
-                    {/* CTA Buttons */}
                     <Box
                         sx={{
                             display: 'flex',
-                            gap: 3,
+                            flexDirection: { xs: 'column', sm: 'row' },
+                            gap: 2,
                             justifyContent: 'center',
-                            flexWrap: 'wrap'
+                            alignItems: 'center',
+                            mb: { xs: 4, md: 6 },
+                            maxWidth: { xs: '300px', sm: 'none' },
+                            mx: 'auto',
                         }}
                     >
                         <Button
-                            variant="contained"
+                            variant="outlined"
+                            size="large"
+                            onClick={() => scrollToSection('about')}
+                            sx={{
+                                px: 4,
+                                py: 1.5,
+                                fontSize: '1rem',
+                                fontWeight: 500,
+                                minWidth: '140px',
+                                width: { xs: '100%', sm: 'auto' },
+                                borderWidth: 2,
+                                '&:hover': {
+                                    borderWidth: 2,
+                                }
+                            }}
+                        >
+                            About
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            size="large"
+                            onClick={() => scrollToSection('stories')}
+                            sx={{
+                                px: 4,
+                                py: 1.5,
+                                fontSize: '1rem',
+                                fontWeight: 500,
+                                minWidth: '140px',
+                                width: { xs: '100%', sm: 'auto' },
+                                borderWidth: 2,
+                                '&:hover': {
+                                    borderWidth: 2,
+                                }
+                            }}
+                        >
+                            My Stories
+                        </Button>
+                        <Button
+                            variant="outlined"
                             size="large"
                             onClick={() => scrollToSection('skills')}
                             sx={{
                                 px: 4,
                                 py: 1.5,
-                                fontSize: '1.1rem',
-                                minWidth: '160px',
-                                textTransform: 'none',
-                                boxShadow: 'none',
+                                fontSize: '1rem',
+                                fontWeight: 500,
+                                minWidth: '140px',
+                                width: { xs: '100%', sm: 'auto' },
+                                borderWidth: 2,
                                 '&:hover': {
-                                    boxShadow: 'none',
+                                    borderWidth: 2,
                                 }
                             }}
                         >
-                            View Skills
+                            Skills
                         </Button>
                         <Button
                             variant="outlined"
@@ -113,16 +151,17 @@ const Hero: FC = () => {
                             sx={{
                                 px: 4,
                                 py: 1.5,
-                                fontSize: '1.1rem',
-                                minWidth: '160px',
-                                textTransform: 'none',
+                                fontSize: '1rem',
+                                fontWeight: 500,
+                                minWidth: '140px',
+                                width: { xs: '100%', sm: 'auto' },
                                 borderWidth: 2,
                                 '&:hover': {
                                     borderWidth: 2,
                                 }
                             }}
                         >
-                            Contact Me
+                            Contact
                         </Button>
                     </Box>
                 </Box>

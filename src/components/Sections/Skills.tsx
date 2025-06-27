@@ -1,219 +1,303 @@
 'use client';
 
 import React from 'react';
-import { Box, Container, Typography, Paper, LinearProgress, Grid, Link } from '@mui/material';
+import {
+    Box,
+    Container,
+    Typography,
+    Grid,
+    Paper,
+    LinearProgress,
+    Stack,
+    Chip,
+    Link
+} from '@mui/material';
 import {
     Computer as ComputerIcon,
     Storage as StorageIcon,
     Cloud as CloudIcon,
     Architecture as ArchitectureIcon,
-    Verified as VerifiedIcon
+    Verified as VerifiedIcon,
+    TrendingUp as TrendingIcon
 } from '@mui/icons-material';
 
-interface Certification {
-    name: string;
-    link: string;
-}
+const Skills: React.FC = () => {
+    const certifications = [
+        {
+            name: 'AWS Certified Cloud Practitioner',
+            link: 'https://www.credly.com/users/rob-norris.4ed21e49',
+            date: '2024'
+        },
+        {
+            name: 'AWS Well-Architected Proficient',
+            link: 'https://www.credly.com/users/rob-norris.4ed21e49',
+            date: '2024'
+        }
+    ];
 
-interface Skill {
-    name: string;
-    level: number;
-}
+    const skillCategories = [
+        {
+            title: 'Frontend Development',
+            icon: <ComputerIcon />,
+            color: '#3B82F6',
+            skills: [
+                { name: 'TypeScript', level: 90, trend: 'up' },
+                { name: 'React', level: 85, trend: 'up' },
+                { name: 'Next.js', level: 85, trend: 'up' },
+            ]
+        },
+        {
+            title: 'Backend Development',
+            icon: <ArchitectureIcon />,
+            color: '#10B981',
+            skills: [
+                { name: 'Node.js', level: 80, trend: 'up' },
+                { name: 'Java/Spring', level: 85, trend: 'stable' },
+                { name: 'REST APIs', level: 85, trend: 'up' },
+            ]
+        },
+        {
+            title: 'Database & Storage',
+            icon: <StorageIcon />,
+            color: '#8B5CF6',
+            skills: [
+                { name: 'MySQL', level: 80, trend: 'stable' },
+                { name: 'PostgreSQL', level: 75, trend: 'up' },
+                { name: 'Oracle SQL', level: 75, trend: 'stable' },
+            ]
+        },
+        {
+            title: 'DevOps & Cloud',
+            icon: <CloudIcon />,
+            color: '#F59E0B',
+            skills: [
+                { name: 'AWS', level: 80, trend: 'up' },
+                { name: 'Azure', level: 60, trend: 'up' },
+                { name: 'CI/CD', level: 80, trend: 'up' },
+            ]
+        }
+    ];
 
-interface SkillCategory {
-    title: string;
-    icon: React.ReactNode;
-    skills: Skill[];
-}
+    const SkillBar = ({ skill }: { skill: any }) => (
+        <Box sx={{ mb: 3 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.primary' }}>
+                    {skill.name}
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>
+                        {skill.level}%
+                    </Typography>
+                    {skill.trend === 'up' && (
+                        <TrendingIcon sx={{ fontSize: 16, color: 'success.main', transform: 'rotate(0deg)' }} />
+                    )}
+                </Box>
+            </Box>
+            <LinearProgress
+                variant="determinate"
+                value={skill.level}
+                sx={{
+                    height: 8,
+                    borderRadius: 4,
+                    bgcolor: 'grey.100',
+                    '& .MuiLinearProgress-bar': {
+                        borderRadius: 4,
+                        background: `linear-gradient(90deg, #F59E0B 0%, #F59E0B 100%)`,
+                    },
+                }}
+            />
+        </Box>
+    );
 
-// Data definitions - separating data from UI
-const certifications: Certification[] = [
-    {
-        name: 'AWS Certified Cloud Practitioner',
-        link: 'https://www.credly.com/users/rob-norris.4ed21e49'
-    },
-    {
-        name: 'AWS Well-Architected Proficient',
-        link: 'https://www.credly.com/users/rob-norris.4ed21e49'
-    }
-];
-
-const skillCategories: SkillCategory[] = [
-    {
-        title: 'Frontend Development',
-        icon: <ComputerIcon />,
-        skills: [
-            { name: 'TypeScript', level: 90 },
-            { name: 'React', level: 85 },
-            { name: 'Next.js', level: 85 },
-        ]
-    },
-    {
-        title: 'Backend Development',
-        icon: <ArchitectureIcon />,
-        skills: [
-            { name: 'Node.js', level: 80 },
-            { name: 'Java/Spring', level: 85 },
-            { name: 'REST APIs', level: 85 },
-        ]
-    },
-    {
-        title: 'Database & Storage',
-        icon: <StorageIcon />,
-        skills: [
-            { name: 'MySQL', level: 80 },
-            { name: 'PostgreSQL', level: 75 },
-            { name: 'Oracle SQL', level: 75 },
-        ]
-    },
-    {
-        title: 'DevOps & Cloud',
-        icon: <CloudIcon />,
-        skills: [
-            { name: 'AWS', level: 80 },
-            { name: 'Azure', level: 60 },
-            { name: 'CI/CD', level: 80 },
-        ]
-    }
-];
-
-const CertificationBadge: React.FC<{ certification: Certification }> = ({ certification }) => (
-    <Link
-        href={certification.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        underline="none"
-    >
-        <Paper
+    return (
+        <Box
+            component="section"
+            id="skills"
             sx={{
-                px: 3,
-                py: 2,
-                bgcolor: 'primary.main',
-                color: 'white',
-                borderRadius: '20px',
-                fontSize: '0.9rem',
-                fontWeight: 500,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1,
-                transition: 'transform 0.2s ease-in-out',
-                '&:hover': {
-                    transform: 'translateY(-2px)'
-                }
+                py: { xs: 8, md: 12 },
+                bgcolor: 'grey.50',
             }}
         >
-            <VerifiedIcon sx={{ fontSize: '1.1rem' }} />
-            {certification.name}
-        </Paper>
-    </Link>
-);
-
-const SkillProgress: React.FC<{ skill: Skill }> = ({ skill }) => (
-    <Box>
-        <Box sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            mb: 0.5
-        }}>
-            <Typography variant="body2" color="text.secondary">
-                {skill.name}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-                {skill.level}%
-            </Typography>
-        </Box>
-        <LinearProgress
-            variant="determinate"
-            value={skill.level}
-            sx={{
-                height: 6,
-                borderRadius: 3,
-                bgcolor: 'grey.100',
-                '& .MuiLinearProgress-bar': {
-                    borderRadius: 3,
-                }
-            }}
-        />
-    </Box>
-);
-
-const Skills: React.FC = () => {
-    return (
-        <Box component="section" id="skills" sx={{ py: 8, bgcolor: 'background.default' }}>
             <Container maxWidth="lg">
-                <Typography
-                    component="h2"
-                    variant="h3"
-                    align="center"
-                    color="text.primary"
-                    gutterBottom
-                    sx={{ mb: 6 }}
-                >
-                    Skills & Expertise
-                </Typography>
+                {/* Section Header */}
+                <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 8 } }}>
+                    <Typography
+                        variant="h3"
+                        sx={{
+                            fontWeight: 700,
+                            mb: 2,
+                            color: 'text.primary',
+                            fontSize: { xs: '2rem', md: '2.5rem' },
+                        }}
+                    >
+                        Skills & Expertise
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            color: 'text.secondary',
+                            maxWidth: '600px',
+                            mx: 'auto',
+                            fontWeight: 400,
+                            lineHeight: 1.6,
+                        }}
+                    >
+                        Technologies and tools I use to bring ideas to life
+                    </Typography>
+                </Box>
 
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    mb: 6
-                }}>
+                {/* Certifications */}
+                <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 8 } }}>
                     <Typography
                         variant="h5"
-                        color="text.secondary"
-                        gutterBottom
-                        sx={{ mb: 3 }}
+                        sx={{
+                            fontWeight: 600,
+                            mb: 3,
+                            color: 'text.primary',
+                        }}
                     >
-                        AWS Certified
+                        AWS Certified Professional
                     </Typography>
 
-                    <Box sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        gap: 2,
-                        flexWrap: 'wrap'
-                    }}>
-                        {certifications.map((cert) => (
-                            <CertificationBadge key={cert.name} certification={cert} />
+                    <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={2}
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        {certifications.map((cert, index) => (
+                            <Link
+                                key={index}
+                                href={cert.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                underline="none"
+                            >
+                                <Paper
+                                    sx={{
+                                        px: 3,
+                                        py: 2,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: 1.5,
+                                        borderRadius: 3,
+                                        border: '1px solid',
+                                        borderColor: 'primary.main',
+                                        bgcolor: 'primary.main',
+                                        color: 'white',
+                                        minWidth: { xs: '280px', sm: 'auto' },
+                                        transition: 'all 0.3s ease',
+                                        '&:hover': {
+                                            transform: 'translateY(-2px)',
+                                            boxShadow: '0 8px 25px rgba(17, 24, 39, 0.2)',
+                                        },
+                                    }}
+                                >
+                                    <VerifiedIcon sx={{ fontSize: 20 }} />
+                                    <Box sx={{ textAlign: 'left' }}>
+                                        <Typography variant="body2" sx={{ fontWeight: 600, fontSize: '0.9rem' }}>
+                                            {cert.name}
+                                        </Typography>
+                                        <Typography variant="caption" sx={{ opacity: 0.8 }}>
+                                            {cert.date}
+                                        </Typography>
+                                    </Box>
+                                </Paper>
+                            </Link>
                         ))}
-                    </Box>
+                    </Stack>
                 </Box>
 
                 <Grid container spacing={4}>
-                    {skillCategories.map((category) => (
-                        <Grid item xs={12} md={6} key={category.title}>
+                    {skillCategories.map((category, index) => (
+                        <Grid item xs={12} md={6} key={index}>
                             <Paper
                                 sx={{
-                                    p: 3,
+                                    p: 4,
                                     height: '100%',
-                                    transition: 'transform 0.2s',
+                                    borderRadius: 3,
+                                    border: '1px solid',
+                                    borderColor: 'grey.200',
+                                    bgcolor: 'background.paper',
+                                    transition: 'all 0.3s ease',
                                     '&:hover': {
-                                        transform: 'translateY(-4px)'
-                                    }
+                                        transform: 'translateY(-4px)',
+                                        boxShadow: '0 12px 40px rgba(0, 0, 0, 0.1)',
+                                        borderColor: 'secondary.main',
+                                    },
                                 }}
                             >
-                                <Box sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 1.5,
-                                    mb: 3,
-                                    color: 'primary.main'
-                                }}>
-                                    {category.icon}
-                                    <Typography variant="h6">
+                                <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
+                                    <Box
+                                        sx={{
+                                            p: 1.5,
+                                            borderRadius: 2,
+                                            bgcolor: 'secondary.light',
+                                            color: 'secondary.main',
+                                            mr: 2,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        {category.icon}
+                                    </Box>
+                                    <Typography
+                                        variant="h6"
+                                        sx={{
+                                            fontWeight: 600,
+                                            color: 'text.primary',
+                                        }}
+                                    >
                                         {category.title}
                                     </Typography>
                                 </Box>
 
-                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-                                    {category.skills.map((skill) => (
-                                        <SkillProgress key={skill.name} skill={skill} />
+                                <Box>
+                                    {category.skills.map((skill, skillIndex) => (
+                                        <SkillBar key={skillIndex} skill={skill} />
                                     ))}
                                 </Box>
                             </Paper>
                         </Grid>
                     ))}
                 </Grid>
+
+                <Box sx={{ mt: { xs: 6, md: 8 }, textAlign: 'center' }}>
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            fontWeight: 600,
+                            mb: 3,
+                            color: 'text.primary',
+                        }}
+                    >
+                        Also Working With
+                    </Typography>
+                    <Stack
+                        direction="row"
+                        spacing={1}
+                        justifyContent="center"
+                        flexWrap="wrap"
+                        sx={{ gap: 1 }}
+                    >
+                        {['Docker', 'Kubernetes', 'GraphQL', 'MongoDB', 'Redis', 'Terraform', 'Python', 'Go'].map((tech) => (
+                            <Chip
+                                key={tech}
+                                label={tech}
+                                variant="outlined"
+                                sx={{
+                                    borderColor: 'grey.300',
+                                    color: 'text.secondary',
+                                    '&:hover': {
+                                        borderColor: 'secondary.main',
+                                        color: 'secondary.main',
+                                        bgcolor: 'secondary.light',
+                                    },
+                                }}
+                            />
+                        ))}
+                    </Stack>
+                </Box>
             </Container>
         </Box>
     );

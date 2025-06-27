@@ -1,4 +1,6 @@
-'use client'
+'use client';
+
+import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from '../theme/theme';
@@ -16,10 +18,13 @@ export default function RootLayout({
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Header />
-            {children}
+            <main style={{ backgroundColor: theme.palette.background.default }}>
+                {children}
+            </main>
             <Footer />
         </ThemeProvider>
         </body>
         </html>
     );
 }
+

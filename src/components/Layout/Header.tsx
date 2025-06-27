@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -12,16 +13,14 @@ import {
     useMediaQuery,
     useTheme
 } from '@mui/material';
-import { FC, useState } from 'react';
 import { Download as DownloadIcon, Menu as MenuIcon } from '@mui/icons-material';
 
-const Header: FC = () => {
-    // Menu items
-    const menuItems = ['About', 'Skills', 'Contact'];
+const Header: React.FC = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-    // Mobile menu state
+    const menuItems = ['About', 'Stories', 'Skills', 'Contact'];
+
     const [mobileAnchorEl, setMobileAnchorEl] = useState<null | HTMLElement>(null);
     const isMobileMenuOpen = Boolean(mobileAnchorEl);
 
@@ -43,43 +42,49 @@ const Header: FC = () => {
 
     return (
         <AppBar position="sticky" color="default" elevation={0}>
-            <Toolbar>
-                {/* Logo */}
+            <Toolbar sx={{ py: 1 }}>
                 <Typography
                     variant="h6"
                     component="div"
                     sx={{
                         flexGrow: 1,
-                        fontFamily: 'monospace',
-                        letterSpacing: '0.05em',
-                        '& .brace': {
-                            color: 'primary.main',
-                            fontWeight: 'bold',
-                        },
-                        '& .underscore': {
-                            color: 'primary.main',
+                        fontFamily: '"SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace',
+                        fontSize: { xs: '1.1rem', md: '1.25rem' },
+                        fontWeight: 600,
+                        color: 'text.primary',
+                        letterSpacing: '-0.01em',
+                        '& .accent': {
+                            color: 'secondary.main',
+                            fontWeight: 600,
                         },
                     }}
                 >
-                    <span className="brace">{'{'}</span>
+                    <span className="accent">{'{'}</span>
                     {' rob'}
-                    <span className="underscore">_</span>
+                    <span className="accent">_</span>
                     {'codes '}
-                    <span className="brace">{'}'}</span>
+                    <span className="accent">{'}'}</span>
                 </Typography>
 
-                {/* Desktop Navigation */}
                 {!isMobile && (
-                    <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mr: 2 }}>
                         {menuItems.map((item) => (
                             <Button
                                 key={item}
                                 color="inherit"
                                 onClick={() => scrollToSection(item)}
                                 sx={{
-                                    mx: 1,
+                                    px: 2,
+                                    py: 1,
+                                    color: 'text.secondary',
+                                    fontWeight: 500,
+                                    fontSize: '0.95rem',
+                                    textTransform: 'none',
+                                    borderRadius: 1,
+                                    transition: 'all 0.2s ease',
                                     '&:hover': {
-                                        color: 'primary.main',
+                                        color: 'text.primary',
+                                        backgroundColor: 'grey.50',
                                     }
                                 }}
                             >
@@ -89,35 +94,28 @@ const Header: FC = () => {
                     </Box>
                 )}
 
-                {/* CV Download Button */}
                 <Button
                     component="a"
                     href="/assets/rob_norris_resume.pdf"
                     download
                     target="_blank"
                     rel="noopener noreferrer"
+                    variant="contained"
+                    size="small"
+                    startIcon={<DownloadIcon sx={{ fontSize: '1rem' }} />}
                     sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        borderRadius: '8px',
-                        backgroundColor: 'primary.main',
-                        color: 'white',
-                        fontSize: '0.9rem',
+                        px: 2.5,
+                        py: 1,
+                        fontSize: '0.875rem',
                         fontWeight: 500,
-                        px: 2,
-                        py: 0.75,
+                        textTransform: 'none',
                         minWidth: 'auto',
-                        transition: 'all 0.2s ease',
-                        '&:hover': {
-                            backgroundColor: '#C49366',
-                        }
+                        borderRadius: 1.5,
                     }}
                 >
-                    <DownloadIcon sx={{ mr: 0.5, fontSize: '1rem' }} />
                     CV
                 </Button>
 
-                {/* Mobile Menu Button */}
                 {isMobile && (
                     <>
                         <IconButton
@@ -125,12 +123,17 @@ const Header: FC = () => {
                             aria-label="open menu"
                             edge="end"
                             onClick={handleMobileMenuOpen}
-                            sx={{ ml: 1 }}
+                            sx={{
+                                ml: 1,
+                                color: 'text.secondary',
+                                '&:hover': {
+                                    backgroundColor: 'grey.50',
+                                }
+                            }}
                         >
                             <MenuIcon />
                         </IconButton>
 
-                        {/* Mobile Menu */}
                         <Menu
                             anchorEl={mobileAnchorEl}
                             open={isMobileMenuOpen}
@@ -143,14 +146,31 @@ const Header: FC = () => {
                                 vertical: 'top',
                                 horizontal: 'right',
                             }}
+                            PaperProps={{
+                                sx: {
+                                    mt: 1,
+                                    borderRadius: 2,
+                                    minWidth: 150,
+                                    border: '1px solid',
+                                    borderColor: 'grey.200',
+                                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                                }
+                            }}
                         >
                             {menuItems.map((item) => (
                                 <MenuItem
                                     key={item}
                                     onClick={() => scrollToSection(item)}
                                     sx={{
-                                        minWidth: 150,
-                                        '&:hover': { color: 'primary.main' }
+                                        py: 1.5,
+                                        px: 2,
+                                        fontSize: '0.95rem',
+                                        fontWeight: 500,
+                                        color: 'text.secondary',
+                                        '&:hover': {
+                                            color: 'text.primary',
+                                            backgroundColor: 'grey.50',
+                                        }
                                     }}
                                 >
                                     {item}
