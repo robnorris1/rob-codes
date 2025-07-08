@@ -71,7 +71,7 @@ const Hero: React.FC = () => {
                         }}
                     >
                         7+ years building robust backend systems and full-stack applications.
-                        Experienced with Node.js, RESTful APIs, and modernizing enterprise
+                        Experienced with Node.js, RESTful APIs, and modernising enterprise
                         systems serving thousands of users.
                     </Typography>
 
