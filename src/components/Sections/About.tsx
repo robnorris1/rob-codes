@@ -31,7 +31,7 @@ const About: React.FC = () => {
         {
             icon: <ExperienceIcon sx={{ fontSize: 28 }} />,
             title: "Enterprise Solutions",
-            description: "Led modernization of large-scale systems serving thousands of users, integrating APIs and improving reliability."
+            description: "Led modernisation of large-scale systems serving thousands of users, integrating APIs and improving reliability."
         }
     ];
 
@@ -40,7 +40,7 @@ const About: React.FC = () => {
         "API Integration",
         "Database Design",
         "System Integration",
-        "Legacy Modernization",
+        "Legacy Modernisation",
         "Agile Development"
     ];
 

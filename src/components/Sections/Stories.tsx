@@ -38,14 +38,14 @@ const Stories: React.FC = () => {
 
     const stories: Story[] = [
         {
-            id: 'legacy-modernization',
+            id: 'legacy-modernisation',
             title: 'Modernizing Enterprise Systems',
             subtitle: 'Redesigning a large-scale time management system',
             icon: <ModernizeIcon />,
             category: 'legacy',
             timeframe: 'Current project',
-            problem: 'Working with a time management system serving 2,400 retail locations that needed modernization and better integration capabilities.',
-            solution: 'Led the complete redesign and modernization effort, focusing on integrating third-party APIs to improve reliability and functionality while maintaining seamless operations during the transition.',
+            problem: 'Working with a time management system serving 2,400 retail locations that needed modernisation and better integration capabilities.',
+            solution: 'Led the complete redesign and modernisation effort, focusing on integrating third-party APIs to improve reliability and functionality while maintaining seamless operations during the transition.',
             outcome: 'Successfully modernized the system architecture while keeping all 2,400+ locations operational throughout the process.',
             techUsed: ['Node.js', 'API Integration', 'System Architecture'],
         },
