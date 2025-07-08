@@ -130,7 +130,7 @@ const About: React.FC = () => {
                             >
                                 Starting as an apprentice in 2017, I've developed strong expertise in backend development
                                 with Node.js and Java, while expanding into full-stack capabilities. My foundation in
-                                server-side development gives me a deep understanding of system architecture and performance optimization.
+                                server-side development gives me a deep understanding of system architecture and performance optimisation.
                             </Typography>
 
                             <Typography
